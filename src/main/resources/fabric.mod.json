@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "bfutility",
+	"version": "1.1.0",
+	"name": "BFUtility",
+	"description": "Flopsterstream's Utiility mod. It is BETTER than all other utility mods!",
+	"authors": [
+		"Flopsterstream"
+	],
+	"contact": {
+		"homepage": "https://github.com/Flopsterstream",
+		"sources": "https://github.com/Flopsterstream/Better-Flop-Utility"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/bfutility/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"me.flopsterstream.bfutility.BFUtility"
+		],
+		"client": [
+			"me.flopsterstream.bfutility.BFUtilityClient"
+		]
+	},
+	"mixins": [
+		"bfutility.mixins.json",
+		{
+			"config": "bfutility.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.5",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

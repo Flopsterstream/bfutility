@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "me.flopsterstream.bfutility.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"MixinAttackHook",
+		"SimpleOptionMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
