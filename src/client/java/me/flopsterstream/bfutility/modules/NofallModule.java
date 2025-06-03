@@ -28,7 +28,6 @@ public class NofallModule extends Module {
 
         if (client.player != null && client.world != null) {
             if (client.player.fallDistance > 2.0f) {
-                // Tell the server we're on the ground to cancel fall damage
                 client.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(true, false
                 ));
             }

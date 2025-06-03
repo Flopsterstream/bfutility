@@ -35,7 +35,6 @@ public class FlightModule extends Module {
 
     @Override
     public void onTick() {
-        // Optional: maintain flight state
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player != null && isEnabled()) {
             PlayerAbilities abilities = client.player.getAbilities();

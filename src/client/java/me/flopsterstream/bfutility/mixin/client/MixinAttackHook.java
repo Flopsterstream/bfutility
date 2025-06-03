@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public class MixinAttackHook {
-
+//this thing is for criticals
     @Inject(method = "attackEntity", at = @At("HEAD"))
     private void onAttack(PlayerEntity player, Entity target, CallbackInfo ci) {
         if (!(target instanceof LivingEntity)) return;

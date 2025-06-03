@@ -6,9 +6,9 @@ import net.minecraft.client.option.GameOptions;
 public class ZoomModule extends Module {
 
     private final MinecraftClient mc = MinecraftClient.getInstance();
-    private float targetFov = 30f;    // Zoomed-in FOV
-    private float defaultFov = 110f;   // Default FOV (usually 70)
-    private float zoomSpeed = 0.1f;   // How fast to interpolate FOV
+    private float targetFov = 30f;
+    private float defaultFov = 110f;
+    private float zoomSpeed = 0.1f;
     private float currentFov;
 
     public ZoomModule() {

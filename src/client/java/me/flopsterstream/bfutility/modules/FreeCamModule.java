@@ -15,7 +15,7 @@ public class FreeCamModule extends Module {
     private Vec3d originalPos = null;
 
     public FreeCamModule() {
-        super("Freecam", Category.COMBAT, "Automatically attacks nearby mobs and players.");
+        super("Freecam (Broken)", Category.COMBAT, "Automatically attacks nearby mobs and players.");
     }
 
     @Override

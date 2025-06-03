@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Mixin(SimpleOption.DoubleSliderCallbacks.class)
 public class SimpleOptionMixin {
-
+//this thing makes me put the britness higher for the fullbright thing
     @Inject(method = "validate(Ljava/lang/Double;)Ljava/util/Optional;", at = @At("RETURN"), cancellable = true)
     public void removeValidation(Double double_, CallbackInfoReturnable<Optional<Double>> cir) {
         Module fullbright = BFUtilityClient.getModuleManager().getModuleByName("Fullbright");

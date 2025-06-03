@@ -6,7 +6,7 @@ import net.minecraft.client.util.math.MatrixStack;
 public abstract class Module {
     private final String name;
     private final String description;
-    private final Category category; // new field
+    private final Category category;
     private boolean enabled = false;
 
     public Module(String name, Category category, String description) {

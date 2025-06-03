@@ -20,7 +20,7 @@ public class ModuleManager {
         register( new CriticalsModule());
         register( new FreeCamModule());
 
-        // register other modules here
+        // put moduels her
     }
 
     public static ModuleManager getInstance() {

@@ -18,7 +18,7 @@ public class CriticalsModule extends Module {
 
     @Override
     public void onEnable() {
-        // You might hook this into your own attack logic or event system.
+
     }
 
     @Override
