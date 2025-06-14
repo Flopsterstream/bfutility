@@ -78,7 +78,6 @@ public abstract class Module {
     public void onOptionValueChanged(String optionName, Object value) {
         if (options.get(optionName) == OptionType.CHECKBOX && value instanceof Boolean bool) {
             checkboxValues.put(optionName, bool);
-            System.out.println("Checkbox '" + optionName + "' set to: " + bool);
         }
     }
 

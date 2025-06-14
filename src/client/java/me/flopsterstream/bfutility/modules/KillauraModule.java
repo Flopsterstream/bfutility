@@ -49,12 +49,12 @@ public class KillauraModule extends Module {
 
 
         if (!entities.isEmpty()) {
-            LivingEntity target = entities.get(0); // Pick the first target
+            LivingEntity target = entities.get(0);
 
             assert client.interactionManager != null;
             client.interactionManager.attackEntity(client.player, target);
             client.player.swingHand(Hand.MAIN_HAND);
-            attackCooldown = rate; // sets to rate default is 10
+            attackCooldown = rate;
         }
     }
 
@@ -63,11 +63,11 @@ public class KillauraModule extends Module {
         if (optionName.equals("Attack rate")) {
             if (value instanceof Integer intValue) {
                 this.rate = intValue;
-                System.out.println("Highlight Range set to: " + rate);
-            } else {
-                System.err.println("Highlight Range value is not an Integer");
+
             }
-            // Optional: subclasses can override this if needed
+
+
+
         }
     }
 

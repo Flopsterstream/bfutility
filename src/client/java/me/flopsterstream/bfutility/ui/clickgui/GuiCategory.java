@@ -91,13 +91,13 @@ public class GuiCategory {
             int optionsBoxWidth = 150;
             int optionsBoxHeight = options.size() * 14 + 2;
 
-            // Render the options box (styled like a category)
+
             context.fill(optionsBoxX - 1, optionsBoxY - 1, optionsBoxX + optionsBoxWidth + 1, optionsBoxY + optionsBoxHeight + 1, 0xFF000000);
             context.fill(optionsBoxX, optionsBoxY, optionsBoxX + optionsBoxWidth, optionsBoxY + 12, 0xFF4F4F4F); // Adjusted header height
             context.drawText(mc.textRenderer, "Options", optionsBoxX + 5, optionsBoxY + 3, 0xFFFFFFFF, false);
 
 
-            // Render the options inside the box
+
             int optionY = optionsBoxY + boxHeight + 2;
             for (String option : options) {
                 Module.OptionType type = selectedModule.getOptionType(option);
@@ -116,7 +116,7 @@ public class GuiCategory {
                         int sliderY = optionY + 2; // Y position of the slider
                         int handleX = sliderX + (sliderValue * sliderWidth / 100); // Position of the slider handle
 
-                        // Render the slider bar
+// Render the slider bar=
                         context.fill(sliderX, sliderY, sliderX + sliderWidth, sliderY + 4, 0xFF666666); // Bar background
                         context.fill(sliderX, sliderY, handleX, sliderY + 4, 0xFFAAAAAA); // Filled portion
 
@@ -153,12 +153,12 @@ public class GuiCategory {
 
         boolean insideHeader = mouseX >= x && mouseX <= x + boxWidth && mouseY >= y && mouseY <= y + boxHeight;
         if (insideHeader) {
-            if (button == 0) { // Left click to drag
+            if (button == 0) {
                 dragging = true;
                 dragOffsetX = (int) (mouseX - x);
                 dragOffsetY = (int) (mouseY - y);
                 return true;
-            } else if (button == 1) { // Right click to toggle expand/collapse
+            } else if (button == 1) {
                 expanded = !expanded;
                 return true;
             }
@@ -188,7 +188,7 @@ public class GuiCategory {
         }
 
         if (showOptions) {
-            // Limit dragging to the header of the options box
+
             boolean insideOptionsHeader = mouseX >= optionsBoxX && mouseX <= optionsBoxX + 150 && mouseY >= optionsBoxY && mouseY <= optionsBoxY + 12;
             if (insideOptionsHeader && button == 0) { // Left click to drag options box
                 draggingOptions = true;
@@ -270,12 +270,12 @@ public class GuiCategory {
                             selectedModule.onOptionSelected(option);
                             selectedModule.onOptionValueChanged(option, newState);
 
-                            System.out.println("Checkbox '" + option + "' set to: " + newState);
+
                         }
                         case SLIDER -> {
                             int newValue = (int) ((mouseX - optionsBoxX) / 1.1);
                             sliderValues.put(option, Math.max(0, Math.min(100, newValue))); // Update the map
-                            System.out.println("Updated slider value for " + option + ": " + newValue);
+
                             selectedModule.onOptionValueChanged(option, sliderValues.get(option));
                             // Notify the module
                         }

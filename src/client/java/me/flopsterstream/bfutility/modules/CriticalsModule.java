@@ -31,7 +31,6 @@ public class CriticalsModule extends Module {
 
     }
 
-    // Call this from your attack logic, e.g., in Killaura
     public void doCritical(Entity target) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null || !(target instanceof LivingEntity)) return;

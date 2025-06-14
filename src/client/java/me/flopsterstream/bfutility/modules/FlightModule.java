@@ -10,7 +10,7 @@ public class FlightModule extends Module {
     public FlightModule() {
         super("Flight", Category.MOVEMENT, "Allows you to fly");
 
-        // Add test options
+
         addOption("Anti kick", OptionType.CHECKBOX);
 
     }
@@ -48,10 +48,10 @@ public class FlightModule extends Module {
             }
 
             if (isCheckboxEnabled("Anti kick")) {
-                System.out.println("Anti-kick is enabled.");
+
                 antiKickTickCounter++;
                 if (antiKickTickCounter >= 20) {
-                    System.out.println("Applying anti-kick motion...");
+
                     client.player.setPos(
                             client.player.getX(),
                             client.player.getY() - 0.04,
@@ -59,9 +59,9 @@ public class FlightModule extends Module {
                     );
                     antiKickTickCounter = 0;
                 }
-            } else {
-                System.out.println("Anti-kick is NOT enabled.");
             }
+
+
 
 
         }
@@ -72,7 +72,7 @@ public class FlightModule extends Module {
         if (getOptionType(optionName) == OptionType.CHECKBOX && value instanceof Boolean boolValue) {
             checkboxValues.put(optionName, boolValue);
         }
-        // Optional: subclasses can override this if needed
+
     }
 
 }

@@ -22,7 +22,7 @@ public class FullbrightModule extends Module {
 
     @Override
     public void onTick() {
-        // Optional: continually reinforce gamma
+
         if (isEnabled()) {
             MinecraftClient.getInstance().options.getGamma().setValue(1500.0);
         }

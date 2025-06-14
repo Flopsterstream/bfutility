@@ -19,7 +19,7 @@ public class ModuleManager {
         register(new CriticalsModule());
         register(new BlockEspModule());
 
-        // Add additional modules here
+
     }
 
     public static ModuleManager getInstance() {

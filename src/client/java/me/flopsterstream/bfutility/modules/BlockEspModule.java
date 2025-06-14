@@ -52,7 +52,7 @@ public class BlockEspModule extends Module {
 
 
         addOption("Highlight Range", OptionType.SLIDER);
-        addOption("Test Input", OptionType.INPUT);
+        addOption("Block (like diamond_block): ", OptionType.INPUT);
     }
 
 
@@ -75,10 +75,10 @@ public class BlockEspModule extends Module {
 
         if (block != Blocks.AIR) {
             this.targetBlock = block;
-            System.out.println("targetBlock set to: " + normalized);
-        } else {
-            System.err.println("Block not found in registry: " + normalized);
+
         }
+
+
     }
 
 
@@ -206,7 +206,7 @@ public class BlockEspModule extends Module {
 
     @Override
     public void onOptionValueChanged(String optionName, Object value) {
-        System.out.println("onOptionValueChanged called with: " + optionName + " = " + value + " (" + value.getClass().getSimpleName() + ")");
+
 
 
 
@@ -215,18 +215,18 @@ public class BlockEspModule extends Module {
             case "Highlight Range" -> {
                 if (value instanceof Integer intValue) {
                     this.range = intValue;
-                    System.out.println("Highlight Range set to: " + range);
-                } else {
-                    System.err.println("Highlight Range value is not an Integer");
+
                 }
+
+
             }
-            case "Test Input" -> {
+            case "Block (like diamond_block): " -> {
                 if (value instanceof String strValue) {
                     this.testInput = strValue;
                     setTargetBlockByName(strValue);
-                } else {
-                    System.err.println("Test Input value is not a String");
                 }
+
+
             }
 
 
