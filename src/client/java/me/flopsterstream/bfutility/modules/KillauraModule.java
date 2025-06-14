@@ -12,14 +12,19 @@ public class KillauraModule extends Module {
 
     private final MinecraftClient client = MinecraftClient.getInstance();
     private int attackCooldown = 0;
+    private  int rate = 10; // Default attack rate (0.5 seconds at 20 TPS)
 
     public KillauraModule() {
         super("Killaura", Category.COMBAT, "Automatically attacks nearby mobs and players.");
+
+        addOption("Attack rate", OptionType.SLIDER);
+
     }
+
 
     @Override
     public void onEnable() {
-        attackCooldown = 0;
+        attackCooldown = rate;
     }
 
     @Override
@@ -42,13 +47,30 @@ public class KillauraModule extends Module {
                 e -> e != client.player && e.isAlive() && !e.isInvisible() && client.player.canSee(e)
         );
 
+
         if (!entities.isEmpty()) {
             LivingEntity target = entities.get(0); // Pick the first target
 
             assert client.interactionManager != null;
             client.interactionManager.attackEntity(client.player, target);
             client.player.swingHand(Hand.MAIN_HAND);
-            attackCooldown = 10; // 0.5s cooldown at 20 TPS
+            attackCooldown = rate; // sets to rate default is 10
         }
     }
+
+
+    public void onOptionValueChanged(String optionName, Object value) {
+        if (optionName.equals("Attack rate")) {
+            if (value instanceof Integer intValue) {
+                this.rate = intValue;
+                System.out.println("Highlight Range set to: " + rate);
+            } else {
+                System.err.println("Highlight Range value is not an Integer");
+            }
+            // Optional: subclasses can override this if needed
+        }
+    }
+
+
 }
+

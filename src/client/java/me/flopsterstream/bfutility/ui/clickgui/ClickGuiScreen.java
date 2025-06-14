@@ -19,18 +19,14 @@ public class ClickGuiScreen extends Screen {
         int startX = 20;
         int startY = 20;
 
-        // Example: You can replace this with your actual categories and modules
         for (int i = 0; i < Category.values().length; i++) {
             categories.add(new GuiCategory(Category.values()[i], startX + i * 60, startY));
         }
-
-
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         this.renderBackground(context, mouseX, mouseY, delta);
-
 
         for (GuiCategory category : categories) {
             category.render(context, mouseX, mouseY, delta);
@@ -59,13 +55,30 @@ public class ClickGuiScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        // Close GUI with Escape
         if (keyCode == InputUtil.GLFW_KEY_ESCAPE) {
             MinecraftClient.getInstance().setScreen(null);
             return true;
         }
+
+        for (GuiCategory category : categories) {
+            if (category.keyPressed(keyCode, scanCode, modifiers)) {
+                return true;
+            }
+        }
+
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
+
+    @Override
+    public boolean charTyped(char chr, int modifiers) {
+        for (GuiCategory category : categories) {
+            if (category.charTyped(chr, modifiers)) {
+                return true;
+            }
+        }
+        return super.charTyped(chr, modifiers);
+    }
+
 
     @Override
     public boolean shouldPause() {

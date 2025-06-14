@@ -4,23 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 public class ModuleManager {
     private static final ModuleManager INSTANCE = new ModuleManager();
 
     private final List<Module> modules = new ArrayList<>();
 
     private ModuleManager() {
-        register( new FullbrightModule());
-        register( new NofallModule());
-        register( new FlightModule());
-        register( new AutoTotemModule());
-        register( new ZoomModule());
-        register( new KillauraModule());
-        register( new CriticalsModule());
-        register( new FreeCamModule());
+        register(new FullbrightModule());
+        register(new NofallModule());
+        register(new FlightModule());
+        register(new AutoTotemModule());
+        register(new ZoomModule());
+        register(new KillauraModule());
+        register(new CriticalsModule());
+        register(new BlockEspModule());
 
-        // put moduels her
+        // Add additional modules here
     }
 
     public static ModuleManager getInstance() {

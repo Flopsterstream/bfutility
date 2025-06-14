@@ -31,7 +31,7 @@ public class AutoTotemModule extends Module {
         if (offhand.getItem() == Items.TOTEM_OF_UNDYING) return; // Already has totem
 
 
-        for (int i = 9; i < 36; i++) {
+        for (int i = 9; i < 45; i++) {
             ItemStack stack = client.player.getInventory().getStack(i);
             if (stack.getItem() == Items.TOTEM_OF_UNDYING) {
                 swapToOffhand(i);
