@@ -36,9 +36,9 @@ public class BlockEspModule extends Module {
     private String testInput = ""; // Variable to store the test input value
     private final Map<String, Integer> sliderValues = new HashMap<>();
 
+    private ScheduledExecutorService executor;
     private final List<BlockPos> highlightedBlocks = new CopyOnWriteArrayList<>();
 
-    private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
 
 
@@ -180,16 +180,24 @@ public class BlockEspModule extends Module {
 
     @Override
     public void onEnable() {
-        executor.scheduleAtFixedRate(this::scanBlocks, 0, 1, TimeUnit.SECONDS); // scan every second
+        if (executor == null || executor.isShutdown() || executor.isTerminated()) {
+            executor = Executors.newSingleThreadScheduledExecutor();
+        }
+
+        executor.scheduleAtFixedRate(this::scanBlocks, 0, 1, TimeUnit.SECONDS);
     }
+
 
 
 
     @Override
     public void onDisable() {
-        executor.shutdownNow();
-        highlightedBlocks.clear(); // avoid rendering outdated results
+        if (executor != null && !executor.isShutdown()) {
+            executor.shutdownNow();
+        }
+        highlightedBlocks.clear();
     }
+
 
 
 
