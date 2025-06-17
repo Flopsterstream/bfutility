@@ -18,7 +18,10 @@ public class ModuleManager {
         register(new KillauraModule());
         register(new CriticalsModule());
         register(new BlockEspModule());
-
+        register( new AirJumpModule());
+        register( new JetpackModule());
+        register( new ReachModule());
+        register( new SpeedModule());
 
     }
 

@@ -31,9 +31,9 @@ public class BlockEspModule extends Module {
 
 
     private final MinecraftClient client = MinecraftClient.getInstance();
-    private int range = 100; // Range to search for blocks
-    private Block targetBlock = Blocks.EMERALD_BLOCK; // Default target block
-    private String testInput = ""; // Variable to store the test input value
+    private int range = 100;
+    private Block targetBlock = Blocks.EMERALD_BLOCK;
+    private String testInput = "";
     private final Map<String, Integer> sliderValues = new HashMap<>();
 
     private ScheduledExecutorService executor;
@@ -102,7 +102,7 @@ public class BlockEspModule extends Module {
 
 
         VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
-        VertexConsumer vertexConsumer = immediate.getBuffer(RenderLayer.getLines());// Use a layer that ignores depth
+        VertexConsumer vertexConsumer = immediate.getBuffer(RenderLayer.getLines());
 
 
         GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -166,12 +166,12 @@ public class BlockEspModule extends Module {
 
         for (BlockPos blockPos : BlockPos.iterate(playerPos.add(-range, -range, -range), playerPos.add(range, range, range))) {
             if (world.getBlockState(blockPos).isOf(targetBlock)) {
-                found.add(blockPos.toImmutable()); // use immutable for thread safety
+                found.add(blockPos.toImmutable());
             }
         }
 
-        highlightedBlocks.clear();           // replace previous data
-        highlightedBlocks.addAll(found);     // update with new data
+        highlightedBlocks.clear();
+        highlightedBlocks.addAll(found);
     }
 
 

@@ -12,7 +12,7 @@ public class KillauraModule extends Module {
 
     private final MinecraftClient client = MinecraftClient.getInstance();
     private int attackCooldown = 0;
-    private  int rate = 10; // Default attack rate (0.5 seconds at 20 TPS)
+    private  int rate = 10;
 
     public KillauraModule() {
         super("Killaura", Category.COMBAT, "Automatically attacks nearby mobs and players.");

@@ -6,9 +6,7 @@ import me.flopsterstream.bfutility.modules.ModuleManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GuiCategory {
 
@@ -24,11 +22,7 @@ public class GuiCategory {
 
     private boolean draggingOptions = false;
     private int optionsDragOffsetX, optionsDragOffsetY;
-    private int optionsBoxX = 200, optionsBoxY = 200; // Initial position of the options box
-
-    private final Map<String, Boolean> checkboxStates = new HashMap<>();
-    private final Map<String, Integer> sliderValues = new HashMap<>();
-    private final Map<String, String> inputValues = new HashMap<>();
+    private int optionsBoxX = 200, optionsBoxY = 200;
     private String activeInputOption = null;
 
     public GuiCategory(Category category, int x, int y) {
@@ -36,18 +30,6 @@ public class GuiCategory {
         this.title = category.name();
         this.x = x;
         this.y = y;
-
-        // Initialize option states
-        List<Module> modules = ModuleManager.getInstance().getModulesByCategory(category);
-        for (Module module : modules) {
-            for (String option : module.getOptions()) {
-                switch (module.getOptionType(option)) {
-                    case CHECKBOX -> checkboxStates.put(option, false); // Default state is OFF
-                    case SLIDER -> sliderValues.put(option, 50); // Default slider value
-                    case INPUT -> inputValues.put(option, ""); // Default input value
-                }
-            }
-        }
     }
 
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
@@ -62,7 +44,7 @@ public class GuiCategory {
             this.y = mouseY - dragOffsetY;
         }
 
-        // Render the category box
+
         context.fill(x - 1, y - 1, x + boxWidth + 1, y + boxHeight + 1, 0xFF000000);
         context.fill(x, y, x + boxWidth, y + boxHeight, 0xFF4F4F4F);
         context.drawText(mc.textRenderer, title, x + 5, y + 3, 0xFFFFFFFF, false);
@@ -91,48 +73,40 @@ public class GuiCategory {
             int optionsBoxWidth = 150;
             int optionsBoxHeight = options.size() * 14 + 2;
 
-
             context.fill(optionsBoxX - 1, optionsBoxY - 1, optionsBoxX + optionsBoxWidth + 1, optionsBoxY + optionsBoxHeight + 1, 0xFF000000);
-            context.fill(optionsBoxX, optionsBoxY, optionsBoxX + optionsBoxWidth, optionsBoxY + 12, 0xFF4F4F4F); // Adjusted header height
+            context.fill(optionsBoxX, optionsBoxY, optionsBoxX + optionsBoxWidth, optionsBoxY + 12, 0xFF4F4F4F);
             context.drawText(mc.textRenderer, "Options", optionsBoxX + 5, optionsBoxY + 3, 0xFFFFFFFF, false);
-
-
 
             int optionY = optionsBoxY + boxHeight + 2;
             for (String option : options) {
                 Module.OptionType type = selectedModule.getOptionType(option);
                 switch (type) {
                     case CHECKBOX -> {
-                        boolean isOn = checkboxStates.getOrDefault(option, false);
+                        boolean isOn = (boolean) selectedModule.getOptionValue(option, false);
                         String optionText = option + (isOn ? " [ON]" : " [OFF]");
                         int optionWidth = mc.textRenderer.getWidth(optionText) + 10;
                         context.fill(optionsBoxX, optionY, optionsBoxX + optionWidth, optionY + 12, 0xFF333333);
                         context.drawText(mc.textRenderer, optionText, optionsBoxX + 3, optionY + 2, 0xFFFFFFFF, false);
                     }
                     case SLIDER -> {
-                        int sliderValue = sliderValues.getOrDefault(option, 50);
-                        int sliderWidth = 100; // Width of the slider bar
-                        int sliderX = optionsBoxX + 10; // X position of the slider
-                        int sliderY = optionY + 2; // Y position of the slider
-                        int handleX = sliderX + (sliderValue * sliderWidth / 100); // Position of the slider handle
+                        int sliderValue = (int) selectedModule.getOptionValue(option, 50);
+                        int sliderWidth = 100;
+                        int sliderX = optionsBoxX + 10;
+                        int sliderY = optionY + 2;
+                        int handleX = sliderX + (sliderValue * sliderWidth / 100);
 
-// Render the slider bar=
-                        context.fill(sliderX, sliderY, sliderX + sliderWidth, sliderY + 4, 0xFF666666); // Bar background
-                        context.fill(sliderX, sliderY, handleX, sliderY + 4, 0xFFAAAAAA); // Filled portion
+                        context.fill(sliderX, sliderY, sliderX + sliderWidth, sliderY + 4, 0xFF666666);
+                        context.fill(sliderX, sliderY, handleX, sliderY + 4, 0xFFAAAAAA);
+                        context.fill(handleX - 2, sliderY - 2, handleX + 2, sliderY + 6, 0xFFFFFFFF);
 
-                        // Render the slider handle
-                        context.fill(handleX - 2, sliderY - 2, handleX + 2, sliderY + 6, 0xFFFFFFFF); // Handle
-
-                        // Render the slider value as text
                         String optionText = option + ": " + sliderValue;
                         context.drawText(mc.textRenderer, optionText, sliderX + sliderWidth + 5, sliderY - 2, 0xFFFFFFFF, false);
                     }
                     case INPUT -> {
-                        String inputValue = inputValues.getOrDefault(option, "");
+                        String inputValue = (String) selectedModule.getOptionValue(option, "");
                         String optionText = option + ": " + inputValue;
                         int optionWidth = mc.textRenderer.getWidth(optionText) + 10;
 
-                        // Highlight the input field if it's active
                         int borderColor = option.equals(activeInputOption) ? 0xFFFFFF00 : 0xFF333333;
                         context.fill(optionsBoxX - 1, optionY - 1, optionsBoxX + optionWidth + 1, optionY + 13, borderColor);
                         context.fill(optionsBoxX, optionY, optionsBoxX + optionWidth, optionY + 12, 0xFF333333);
@@ -143,7 +117,6 @@ public class GuiCategory {
             }
         }
     }
-
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         MinecraftClient mc = MinecraftClient.getInstance();
@@ -174,10 +147,10 @@ public class GuiCategory {
 
                 boolean insideModule = mouseX >= x && mouseX <= x + moduleWidth && mouseY >= moduleY && mouseY <= moduleY + 12;
                 if (insideModule) {
-                    if (button == 0) { // Left click to toggle module
+                    if (button == 0) {
                         module.toggle();
                         return true;
-                    } else if (button == 1) { // Right click to show options
+                    } else if (button == 1) {
                         selectedModule = module;
                         showOptions = true;
                         return true;
@@ -188,9 +161,8 @@ public class GuiCategory {
         }
 
         if (showOptions) {
-
             boolean insideOptionsHeader = mouseX >= optionsBoxX && mouseX <= optionsBoxX + 150 && mouseY >= optionsBoxY && mouseY <= optionsBoxY + 12;
-            if (insideOptionsHeader && button == 0) { // Left click to drag options box
+            if (insideOptionsHeader && button == 0) {
                 draggingOptions = true;
                 optionsDragOffsetX = (int) (mouseX - optionsBoxX);
                 optionsDragOffsetY = (int) (mouseY - optionsBoxY);
@@ -201,17 +173,14 @@ public class GuiCategory {
         return false;
     }
 
-
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (activeInputOption != null) {
-            if (keyCode == 257) { // Enter key to finish input
-
+            if (keyCode == 257) {
                 activeInputOption = null;
-            } else if (keyCode == 259) { // Backspace key
-                String currentValue = inputValues.getOrDefault(activeInputOption, "");
+            } else if (keyCode == 259) {
+                String currentValue = (String) selectedModule.getOptionValue(activeInputOption, "");
                 if (!currentValue.isEmpty()) {
-                    inputValues.put(activeInputOption, currentValue.substring(0, currentValue.length() - 1));
-
+                    selectedModule.setOptionValue(activeInputOption, currentValue.substring(0, currentValue.length() - 1));
                 }
             }
             return true;
@@ -220,28 +189,17 @@ public class GuiCategory {
         return false;
     }
 
-
     public boolean charTyped(char chr, int modifiers) {
         if (activeInputOption != null) {
-
-            String currentValue = inputValues.getOrDefault(activeInputOption, "");
+            String currentValue = (String) selectedModule.getOptionValue(activeInputOption, "");
             String newValue = currentValue + chr;
-            inputValues.put(activeInputOption, newValue); // Append typed character
-
-
-            // Notify the module of the updated input option
-            if (selectedModule != null) {
-                selectedModule.onOptionValueChanged(activeInputOption, newValue);
-            }
-
+            selectedModule.setOptionValue(activeInputOption, newValue);
+            selectedModule.onOptionValueChanged(activeInputOption, newValue);
             return true;
         }
 
-
         return false;
     }
-
-
 
     public void mouseReleased(double mouseX, double mouseY, int button) {
         if (button == 0) {
@@ -250,39 +208,27 @@ public class GuiCategory {
         }
 
         if (showOptions && selectedModule != null) {
-            int optionY = optionsBoxY + 15; // Skip the title height
+            int optionY = optionsBoxY + 15;
             for (String option : selectedModule.getOptions()) {
                 Module.OptionType type = selectedModule.getOptionType(option);
                 if (mouseX >= optionsBoxX && mouseX <= optionsBoxX + 150 && mouseY >= optionY && mouseY <= optionY + 12) {
-                    if (type == Module.OptionType.INPUT) {
-                        activeInputOption = option; // Set active input field
-
-                    }
-
-
                     switch (type) {
                         case CHECKBOX -> {
-                            boolean currentState = checkboxStates.getOrDefault(option, false);
+                            boolean currentState = (boolean) selectedModule.getOptionValue(option, false);
                             boolean newState = !currentState;
-                            checkboxStates.put(option, newState);
-
-                            // Notify the module
-                            selectedModule.onOptionSelected(option);
+                            selectedModule.setOptionValue(option, newState);
                             selectedModule.onOptionValueChanged(option, newState);
-
-
                         }
                         case SLIDER -> {
-                            int newValue = (int) ((mouseX - optionsBoxX) / 1.1);
-                            sliderValues.put(option, Math.max(0, Math.min(100, newValue))); // Update the map
-
-                            selectedModule.onOptionValueChanged(option, sliderValues.get(option));
-                            // Notify the module
+                            int sliderWidth = 100;
+                            int sliderX = optionsBoxX + 10;
+                            int newValue = (int) (((mouseX - sliderX) / sliderWidth) * 100);
+                            newValue = Math.max(0, Math.min(100, newValue));
+                            selectedModule.setOptionValue(option, newValue);
+                            selectedModule.onOptionValueChanged(option, newValue);
                         }
                         case INPUT -> {
-                            if (mouseX >= optionsBoxX && mouseX <= optionsBoxX + 150 && mouseY >= optionY && mouseY <= optionY + 12) {
-                                activeInputOption = option;
-                            }
+                            activeInputOption = option;
                         }
                     }
                     return;
@@ -291,6 +237,4 @@ public class GuiCategory {
             }
         }
     }
-
 }
-

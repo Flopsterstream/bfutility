@@ -18,14 +18,14 @@ public class ZoomModule extends Module {
 
     @Override
     public void onEnable() {
-        // Save current default FOV
+
         defaultFov = mc.options.getFov().getValue();
         currentFov = defaultFov;
     }
 
     @Override
     public void onDisable() {
-        // Reset FOV to default
+
         mc.options.getFov().setValue((int) defaultFov);
     }
 
@@ -35,7 +35,7 @@ public class ZoomModule extends Module {
 
         float desiredFov = isEnabled() ? targetFov : defaultFov;
 
-        // Smoothly interpolate FOV towards desiredFov
+
         currentFov += (desiredFov - currentFov) * zoomSpeed;
 
         mc.options.getFov().setValue((int) currentFov);

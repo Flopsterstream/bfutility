@@ -10,17 +10,18 @@ public abstract class Module {
     private final String description;
     private final Category category;
     private boolean enabled = false;
+    private final Map<String, Object> optionValues = new HashMap<>();
 
-    // Enum to define option types
+    // Enum
     public enum OptionType {
         CHECKBOX,
         SLIDER,
         INPUT
     }
 
-    // Map to store options and their types
+
     private final Map<String, OptionType> options = new HashMap<>();
-    // Map to store checkbox values
+
     protected final Map<String, Boolean> checkboxValues = new HashMap<>();
 
     public Module(String name, Category category, String description) {
@@ -55,24 +56,24 @@ public abstract class Module {
         return category;
     }
 
-    // Method to add an option with its type
+
     public void addOption(String optionName, OptionType type) {
         options.put(optionName, type);
     }
 
-    // Method to return a list of options for the module
+
     public List<String> getOptions() {
         return new ArrayList<>(options.keySet());
     }
 
-    // Method to get the type of a specific option
+
     public OptionType getOptionType(String optionName) {
         return options.get(optionName);
     }
 
-    // Method to handle the selection of an option
+
     public void onOptionSelected(String option) {
-        // Override in subclasses to handle option selection
+
     }
 
     public void onOptionValueChanged(String optionName, Object value) {
@@ -85,5 +86,19 @@ public abstract class Module {
     public boolean isCheckboxEnabled(String optionName) {
         return checkboxValues.getOrDefault(optionName, false);
     }
+
+
+    public void setOptionValue(String option, Object value) {
+        optionValues.put(option, value);
+    }
+
+    public Object getOptionValue(String option, Object defaultValue) {
+        return optionValues.getOrDefault(option, defaultValue);
+    }
+
+    public Map<String, Object> getAllOptionValues() {
+        return optionValues;
+    }
+
 
 }
